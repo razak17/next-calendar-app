@@ -1,23 +1,16 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
+
+import { fontMono, fontSans } from "@/lib/fonts";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "Calendar App",
-  description:
-    "A simple and efficient calendar app that helps you manage your events, meetings, and schedules with ease. Stay organized and never miss an important date again!",
+  title: siteConfig.name,
+  description: siteConfig.description,
+  metadataBase: new URL(siteConfig.url),
 };
 
 export default function RootLayout({
@@ -29,7 +22,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} animate-fade-in antialiased`}
+          className={`${fontSans.variable} ${fontMono.variable} animate-fade-in antialiased`}
         >
           {children}
           <Toaster />

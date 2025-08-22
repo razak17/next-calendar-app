@@ -11,7 +11,7 @@ export default async function MainLayout({
 
   return (
     <main className="relative">
-      <SiteHeader user={user} />
+      <SiteHeader userId={user?.id} />
       <section className="pt-36">{children}</section>
     </main>
   );

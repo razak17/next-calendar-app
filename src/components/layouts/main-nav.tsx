@@ -6,7 +6,6 @@ import {
   SignUpButton,
   UserButton,
 } from "@clerk/nextjs";
-import type { User } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -17,17 +16,15 @@ import type { NavItem } from "@/types";
 import { Button } from "../ui/button";
 
 interface MainNavProps {
-  user: User | null;
+  userId?: string;
   items?: NavItem[];
 }
 
-export function MainNav({ user, items }: MainNavProps) {
+export function MainNav({ userId, items }: MainNavProps) {
   const pathname = usePathname();
 
   return (
-    <nav
-      className={`fixed z-50 flex h-28 w-full items-center justify-between gap-4 bg-gray-300 px-10 shadow-2xl ${user ? "mb-28" : ""}`}
-    >
+    <nav className="fixed z-50 flex h-28 w-full items-center justify-between gap-4 bg-gray-300 px-10 shadow-2xl">
       <Link
         href="/events"
         className="flex items-center gap-1 duration-500 hover:scale-120"
@@ -41,7 +38,7 @@ export function MainNav({ user, items }: MainNavProps) {
       </Link>
 
       <section className="sticky top-0 flex justify-between text-black">
-        {user ? (
+        {userId ? (
           <div className="flex flex-1 max-sm:gap-0 sm:gap-6">
             {items?.map((item) => {
               const isActive =
@@ -90,7 +87,7 @@ export function MainNav({ user, items }: MainNavProps) {
         )}
       </section>
 
-      {user && (
+      {userId && (
         <div className="duration-500 hover:scale-150">
           <SignedIn>
             <UserButton />

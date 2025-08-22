@@ -9,8 +9,8 @@ interface SiteHeaderProps {
 
 export function SiteHeader({ userId }: SiteHeaderProps) {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background">
-      <div className="container flex h-16 items-center">
+    <header className="w-full">
+      <div className="flex h-28 items-center">
         <MainNav userId={userId} items={siteConfig.mainNav} />
       </div>
     </header>

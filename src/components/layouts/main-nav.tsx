@@ -27,7 +27,7 @@ export function MainNav({ userId, items }: MainNavProps) {
     <nav className="fixed z-50 flex h-28 w-full items-center justify-between gap-4 bg-gray-300 px-10 shadow-2xl">
       <Link
         href="/events"
-        className="flex items-center gap-1 duration-500 hover:scale-120"
+        className="flex items-center gap-1 duration-500 hover:scale-150"
       >
         <Image
           src="/assets/logo.svg"

@@ -38,7 +38,6 @@ export default function EventCard({
         !isActive && "border-accent bg-accent",
       )}
     >
-      {}
       <CardHeader className={cn(!isActive && "opacity-50")}>
         <CardTitle>{name}</CardTitle>
         <CardDescription>
@@ -46,16 +45,13 @@ export default function EventCard({
         </CardDescription>
       </CardHeader>
 
-      {}
       {description != null && (
         <CardContent className={cn(!isActive && "opacity-50")}>
           {description}
         </CardContent>
       )}
 
-      {}
       <CardFooter className="mt-auto flex justify-end gap-2">
-        {}
         {isActive && (
           <CopyEventButton
             variant="outline"
@@ -63,12 +59,11 @@ export default function EventCard({
             clerkUserId={clerkUserId}
           />
         )}
-        {}
         <Button
           className="cursor-pointer bg-blue-400 hover:scale-105 hover:bg-blue-600"
           asChild
         >
-          <Link href={`/events/${id}/edit`}>Edit</Link>
+          <Link href={`/events/edit/${id}`}>Edit</Link>
         </Button>
       </CardFooter>
     </Card>

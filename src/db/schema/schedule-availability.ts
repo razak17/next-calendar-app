@@ -1,7 +1,11 @@
 import { relations } from "drizzle-orm";
-import { index, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { index, pgEnum, pgTable, text, uuid } from "drizzle-orm/pg-core";
 
-import { schedule, scheduleDayOfWeekEnum } from "./schedule";
+import { DAYS_OF_WEEK_IN_ORDER } from "@/lib/constants";
+
+import { schedule } from "./schedule";
+
+export const scheduleDayOfWeekEnum = pgEnum("day", DAYS_OF_WEEK_IN_ORDER);
 
 export const scheduleAvailability = pgTable(
   "scheduleAvailabilities",
@@ -26,3 +30,5 @@ export const scheduleAvailabilityRelations = relations(
     }),
   }),
 );
+
+export type ScheduleAvailabilityRow = typeof scheduleAvailability.$inferSelect;

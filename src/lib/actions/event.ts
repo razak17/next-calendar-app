@@ -3,16 +3,13 @@
 import { auth } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import type { z } from "zod";
 
 import { db } from "@/db/drizzle";
 import { event } from "@/db/schema/event";
 import { getErrorMessage } from "../handle-error";
-import { eventFormSchema } from "../validations/event";
+import { type EventFormSchema, eventFormSchema } from "../validations/event";
 
-export async function createEvent(
-  unsafeData: z.infer<typeof eventFormSchema>,
-): Promise<void> {
+export async function createEvent(unsafeData: EventFormSchema): Promise<void> {
   try {
     const { userId } = await auth();
 
@@ -32,7 +29,7 @@ export async function createEvent(
 
 export async function updateEvent(
   id: string,
-  unsafeData: z.infer<typeof eventFormSchema>,
+  unsafeData: EventFormSchema,
 ): Promise<void> {
   try {
     const { userId } = await auth();

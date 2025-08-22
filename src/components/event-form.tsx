@@ -108,7 +108,11 @@ export default function EventForm({
             <FormItem>
               <FormLabel>Duration</FormLabel>
               <FormControl>
-                <Input type="number" {...field} />
+                <Input
+                  type="number"
+                  {...field}
+                  onChange={(e) => field.onChange(Number(e.target.value))}
+                />
               </FormControl>
               <FormDescription>In minutes</FormDescription>
               <FormMessage />

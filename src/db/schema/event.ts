@@ -27,3 +27,5 @@ export const event = pgTable(
     index("clerkUserIdIndex").on(table.clerkUserId), // index on clerkUserId for faster querying
   ],
 );
+
+export type EventRow = typeof event.$inferSelect;

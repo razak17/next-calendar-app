@@ -1,5 +1,4 @@
 import { isClerkAPIResponseError } from "@clerk/nextjs/errors";
-import { toast } from "sonner";
 import * as z from "zod";
 
 export const unknownError =
@@ -15,11 +14,4 @@ export function getErrorMessage(err: unknown) {
   } else {
     return unknownError;
   }
-}
-
-export function showErrorToast(err: unknown) {
-  const errorMessage = getErrorMessage(err);
-  console.log({ errorMessage });
-
-  return toast.error(errorMessage);
 }

@@ -41,7 +41,7 @@ export default function EventForm({
   event?: {
     id: string;
     name: string;
-    description?: string;
+    description?: string | null;
     durationInMinutes: number;
     isActive: boolean;
   };
@@ -111,7 +111,11 @@ export default function EventForm({
                 <Input
                   type="number"
                   {...field}
-                  onChange={(e) => field.onChange(Number(e.target.value))}
+                  value={field.value?.toString() ?? ""}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    field.onChange(value === "" ? "" : Number(value));
+                  }}
                 />
               </FormControl>
               <FormDescription>In minutes</FormDescription>

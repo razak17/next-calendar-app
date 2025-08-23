@@ -29,3 +29,4 @@ export const event = pgTable(
 );
 
 export type EventRow = typeof event.$inferSelect;
+export type PublicEvent = Omit<EventRow, "isActive"> & { isActive: true };

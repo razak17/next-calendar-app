@@ -1,14 +1,11 @@
 "use server";
 
 import { db } from "@/db/drizzle";
-import type { EventRow } from "@/db/schema";
-
-export type PublicEvent = Omit<EventRow, "isActive"> & { isActive: true };
+import type { EventRow, PublicEvent } from "@/db/schema";
 
 export async function getEvents(clerkUserId: string): Promise<EventRow[]> {
   const events = await db.query.event.findMany({
     where: ({ clerkUserId: userIdCol }, { eq }) => eq(userIdCol, clerkUserId),
-
     orderBy: ({ name }, { asc, sql }) => asc(sql`lower(${name})`),
   });
 

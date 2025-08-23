@@ -37,6 +37,52 @@ export async function getSchedule(userId: string): Promise<FullSchedule> {
   return schedule as FullSchedule;
 }
 
+function getAvailabilities(
+  groupedAvailabilities: Partial<
+    Record<
+      (typeof DAYS_OF_WEEK_IN_ORDER)[number],
+      (typeof scheduleAvailability.$inferSelect)[]
+    >
+  >,
+  date: Date,
+  timezone: string,
+): { start: Date; end: Date }[] {
+  const dayOfWeek = (() => {
+    if (isMonday(date)) return "monday";
+    if (isTuesday(date)) return "tuesday";
+    if (isWednesday(date)) return "wednesday";
+    if (isThursday(date)) return "thursday";
+    if (isFriday(date)) return "friday";
+    if (isSaturday(date)) return "saturday";
+    if (isSunday(date)) return "sunday";
+    return null;
+  })();
+
+  if (!dayOfWeek) return [];
+
+  const dayAvailabilities = groupedAvailabilities[dayOfWeek];
+
+  if (!dayAvailabilities) return [];
+
+  return dayAvailabilities.map(({ startTime, endTime }) => {
+    const [startHour, startMinute] = startTime.split(":").map(Number);
+
+    const [endHour, endMinute] = endTime.split(":").map(Number);
+
+    const start = fromZonedTime(
+      setMinutes(setHours(date, startHour), startMinute),
+      timezone,
+    );
+
+    const end = fromZonedTime(
+      setMinutes(setHours(date, endHour), endMinute),
+      timezone,
+    );
+
+    return { start, end };
+  });
+}
+
 export async function getValidTimesFromSchedule(
   timesInOrder: Date[],
   event: { clerkUserId: string; durationInMinutes: number },
@@ -85,51 +131,5 @@ export async function getValidTimesFromSchedule(
         );
       })
     );
-  });
-}
-
-function getAvailabilities(
-  groupedAvailabilities: Partial<
-    Record<
-      (typeof DAYS_OF_WEEK_IN_ORDER)[number],
-      (typeof scheduleAvailability.$inferSelect)[]
-    >
-  >,
-  date: Date,
-  timezone: string,
-): { start: Date; end: Date }[] {
-  const dayOfWeek = (() => {
-    if (isMonday(date)) return "monday";
-    if (isTuesday(date)) return "tuesday";
-    if (isWednesday(date)) return "wednesday";
-    if (isThursday(date)) return "thursday";
-    if (isFriday(date)) return "friday";
-    if (isSaturday(date)) return "saturday";
-    if (isSunday(date)) return "sunday";
-    return null;
-  })();
-
-  if (!dayOfWeek) return [];
-
-  const dayAvailabilities = groupedAvailabilities[dayOfWeek];
-
-  if (!dayAvailabilities) return [];
-
-  return dayAvailabilities.map(({ startTime, endTime }) => {
-    const [startHour, startMinute] = startTime.split(":").map(Number);
-
-    const [endHour, endMinute] = endTime.split(":").map(Number);
-
-    const start = fromZonedTime(
-      setMinutes(setHours(date, startHour), startMinute),
-      timezone,
-    );
-
-    const end = fromZonedTime(
-      setMinutes(setHours(date, endHour), endMinute),
-      timezone,
-    );
-
-    return { start, end };
   });
 }

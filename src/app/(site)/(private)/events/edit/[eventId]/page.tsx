@@ -24,9 +24,7 @@ export default async function EditEventPage({
         <CardTitle>Edit Event</CardTitle>
       </CardHeader>
       <CardContent>
-        <EventForm
-          event={{ ...event, description: event.description || undefined }}
-        />
+        <EventForm event={event ? event : undefined} />
       </CardContent>
     </Card>
   );

@@ -5,11 +5,12 @@ import { Copy, Eye } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import { getPublicEvents, type PublicEvent } from "@/lib/queries/event";
+import { getPublicEvents } from "@/lib/queries/event";
 
 import PublicEventCard from "./public-event-card";
 import Loading from "@/components/loading";
 import { Button } from "@/components/ui/button";
+import type { PublicEvent } from "@/db/schema";
 
 type PublicProfileProps = {
   userId: string;
